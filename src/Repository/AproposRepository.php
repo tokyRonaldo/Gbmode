@@ -65,14 +65,13 @@ class AproposRepository extends ServiceEntityRepository
 //    }
 
 
-/**
-* Pour recupere apropos
-*/
-public function apropos()
-{
- return $this->createQueryBuilder('p')
- ->getQuery()
- ->getOneOrNullResult();
+    /**
+    * Pour recupere apropos
+    */  
+    public function apropos(){
+        return $this->createQueryBuilder('p')
+        ->getQuery()
+        ->getOneOrNullResult();
 
-}
+    }
 }

@@ -18,6 +18,8 @@ class HomeController extends AbstractController
     public function index(VetementRepository $vetement,AproposRepository $apropos): Response
     {
         $vetement=$vetement->lastProducts();
+        // $use = $this->getUser();
+        // dd($use);
         
         return $this->render('home/index.html.twig', [
             'vetement' => $vetement,

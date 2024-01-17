@@ -30,8 +30,9 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         $apropos=$this->aproposRepository->apropos();
+        $getTitre = isset($apropos) ? ($apropos->getTitre()) : 'gb_mode';
         return Dashboard::new()
-            ->setTitle($apropos->getTitre());
+            ->setTitle($getTitre);
     }
 
     public function configureMenuItems(): iterable
@@ -39,6 +40,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Produits', 'fas fa-list', Vetement::class);
         yield MenuItem::linkToCrud('Categories', 'fas fa-tags', Categorie::class);
+        // yield MenuItem::linkToCrud('Apropos', 'fas fa-tags', Apropos::class);
         yield MenuItem::linkToCrud('Paramètres', 'fas fa-cog', Apropos::class);
     }
 }

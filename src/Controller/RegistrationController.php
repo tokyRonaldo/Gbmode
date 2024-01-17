@@ -16,18 +16,22 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+
 class RegistrationController extends AbstractController
 {
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager,UserRepository $userRepository): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+        // $result=$userRepository->findAll();
+        $result=$this->getDoctrine()->getRepository(User::class)->findAll();
+
             // encode the plain password
             $user->setPassword(
             $userPasswordHasher->hashPassword(
@@ -36,7 +40,14 @@ class RegistrationController extends AbstractController
                 )
             );
             // $user->setRoles('ROlE_USER');
-
+            if (empty($result)) {
+                $roles=['ROLE_USER','ROLE_ADMIN'];
+                $user->setRoles($roles);
+            }
+            else{
+                $roles=['ROLE_USER'];
+                $user->setRoles($roles);
+            }
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email

@@ -29,6 +29,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     public function setProductSlug(BeforeEntityPersistedEvent $event){
         $entity=$event->getEntityInstance();
 
+        //verifier si c'est evenement de vetement
         if(!($entity instanceof Vetement)){
             return;   
         }

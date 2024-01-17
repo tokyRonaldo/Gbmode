@@ -40,9 +40,9 @@
 							
 						{# <h4 class="wow fadeInDown animated"><a href="#" class="btn wow fadeInDown animated">Read More</a></h4> #}
 						<ul class="footer_list">
-							<li class="wow fadeInDown animated">{{aproposFooter().contact}}</li>
-							<li class="wow fadeInDown animated"><a href="{{aproposFooter().facebook}}">{{aproposFooter().facebook}}</a></li>
-							<li class="wow fadeInDown animated">{{aproposFooter().email}}</li>
+							<li class="wow fadeInDown animated">{{aproposFooter().contact ?? null}}</li>
+							<li class="wow fadeInDown animated"><a href="{{aproposFooter().facebook ?? null}}">{{aproposFooter().facebook ?? null}}</a></li>
+							<li class="wow fadeInDown animated">{{aproposFooter().email ?? null}}</li>
 						</ul>
 					</div>
 				</div>
@@ -50,9 +50,11 @@
 					<div class="footer_list_wrapper">
 						<h2 class="wow fadeInDown animated">Categories</h2>
 						<ul class="footer_list">
+							{% if categorieNavbar() | length > 0 %}
 							{% for categorie in categorieNavbar() %}
 										<li class="wow fadeInDown animated"><a href="{{path('app_categorie',{'slug': categorie.slug})}}" class="nav-link">{{categorie.nom}}</a></li>
-										{% endfor %}
+							{% endfor %}
+							{% endif %}
 							</ul>
 					</div>
 				</div>
@@ -63,7 +65,7 @@
 							
 							<li >
 							<p>
-							{{aproposFooter().description}}
+							{{aproposFooter().description ?? null}}
 							</p>
 							</li>
 							
